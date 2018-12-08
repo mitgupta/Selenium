@@ -1,0 +1,118 @@
+package newproject2;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchFrameException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+public class MyClass2 {
+	public static void main(String[] args) throws InterruptedException {
+        
+		System.setProperty("webdriver.chrome.driver","G:\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+    	driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+    	driver.manage().window().maximize();
+        driver.get("http://automationpractice.com/index.php");
+        
+        driver.findElement(By.xpath("//a[@title='Log in to your customer account']")).click();
+        driver.findElement(By.xpath("//input[@id='email_create']")).sendKeys("xyi98@5bcd.com");
+        
+        driver.findElement(By.xpath("//button[@id='SubmitCreate']//span")).click();
+        
+        driver.findElement(By.xpath("//input[@id='id_gender1']")).click();
+        driver.findElement(By.xpath("//input[@id='customer_firstname']")).sendKeys("firstname");
+        driver.findElement(By.xpath("//input[@id='customer_lastname']")).sendKeys("lastname");
+        driver.findElement(By.xpath("//input[@id='passwd']")).sendKeys("password");
+        
+        driver.findElement(By.xpath("//select[@id='days']")).sendKeys("1");
+        driver.findElement(By.xpath("//select[@id='months']")).sendKeys("January");
+        driver.findElement(By.xpath("//select[@id='years']")).sendKeys("1995");
+   
+        driver.findElement(By.xpath("//input[@id='newsletter']")).click();
+        driver.findElement(By.xpath("//input[@id='optin']")).click();
+        
+        driver.findElement(By.xpath("//input[@id='firstname']")).sendKeys("firstname");
+        driver.findElement(By.xpath("//input[@id='lastname']")).sendKeys("lastname");
+        driver.findElement(By.xpath("//input[@id='company']")).sendKeys("techno");
+        driver.findElement(By.xpath("//input[@id='address1']")).sendKeys("454 street");
+        driver.findElement(By.xpath("//input[@id='address2']")).sendKeys("WE Park");
+        driver.findElement(By.xpath("//input[@id='city']")).sendKeys("Austin");
+        driver.findElement(By.xpath(" //input[@id='postcode']")).sendKeys("22341");
+     
+        driver.findElement(By.xpath("//select[@id='id_state']")).sendKeys("Alabama");
+        driver.findElement(By.xpath("//textarea[@id='other']")).sendKeys("add info 1");
+        driver.findElement(By.xpath("//input[@id='phone']")).sendKeys("1243567890");
+        driver.findElement(By.xpath("//input[@id='phone_mobile']")).sendKeys("1243567890");
+        driver.findElement(By.xpath("//input[@id='alias']")).sendKeys("1243567890");
+      
+        driver.findElement(By.xpath("//button[@id='submitAccount']//span")).click();
+        
+      //Women section
+        driver.findElement(By.xpath("//a[@title='Women']")).click();
+        
+      //Click on Add to cart for product 1
+        WebElement web_Element_To_Be_Hovered = driver.findElement(By.xpath("//img[@title='Faded Short Sleeve T-shirts']"));
+        Actions builder = new Actions(driver);
+        builder.moveToElement(web_Element_To_Be_Hovered).build().perform();
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        //Add to cart by hovering mouse on quick view(from outside)
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@class='ajax_block_product col-xs-12 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line first-item-of-mobile-line hovered']//span[contains(text(),'Add to cart')]")));
+        driver.findElement(By.xpath("//li[@class='ajax_block_product col-xs-12 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line first-item-of-mobile-line hovered']//span[contains(text(),'Add to cart')]")).click();
+      
+      //Clicking on quick view after hovering mouse
+      //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@class='ajax_block_product col-xs-12 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line first-item-of-mobile-line hovered']//span[contains(text(),'Quick view')]")));
+      //driver.findElement(By.xpath("//li[@class='ajax_block_product col-xs-12 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line first-item-of-mobile-line hovered']//span[contains(text(),'Quick view')]")).click();
+
+    //Click on Continue shopping  
+      driver.findElement(By.xpath("//div[@class='clearfix']//span[@title='Continue shopping']")).click();
+      
+    //Click on Add to cart for product 2
+      WebElement web_Element_To_Be_Hovered1 = driver.findElement(By.xpath("//img[@title='Blouse']"));
+      Actions builder1 = new Actions(driver);
+      builder1.moveToElement(web_Element_To_Be_Hovered1).build().perform();
+    
+      WebDriverWait wait1 = new WebDriverWait(driver, 5);
+      
+     //Add to cart by hovering mouse on quick view(from outside)
+      wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@class='ajax_block_product col-xs-12 col-sm-6 col-md-4 last-item-of-tablet-line hovered']//span[contains(text(),'Add to cart')]")));
+      driver.findElement(By.xpath("//li[@class='ajax_block_product col-xs-12 col-sm-6 col-md-4 last-item-of-tablet-line hovered']//span[contains(text(),'Add to cart')]")).click();
+    
+     //Click on proceed to checkout
+      driver.findElement(By.xpath("//div[@class='clearfix']//a")).click();
+   
+    //Verify cart total 
+     String cart_total= driver.findElement(By.xpath("//div[@id='order-detail-content']//span[@id='total_price']")).getText();
+     System.out.println("Total is:"+ cart_total);
+     
+     if (cart_total.equalsIgnoreCase("51.53")==true){    
+    	 System.out.println("Price matched");
+     }
+     else {
+    	 System.out.println("Price doesn't match");
+     }
+     
+    //Navigate through all pages:
+     driver.findElement(By.xpath("//p[@class='cart_navigation clearfix']//span")).click();
+     driver.findElement(By.xpath("//button[@name='processAddress']//span")).click();
+     driver.findElement(By.xpath("//input[@id='cgv']")).click();
+     driver.findElement(By.xpath("//button[@name='processCarrier']//span")).click();
+     driver.findElement(By.xpath("//a[@title='Pay by bank wire']")).click();
+     driver.findElement(By.xpath("//p[@id='cart_navigation']//span")).click();
+     driver.findElement(By.xpath("//a[@title='Back to orders']")).click();
+     
+    //Verify total in order history:
+     String order_history_price = driver.findElement(By.xpath("//td[@class='history_price']")).getText();
+     System.out.println("Total product price is:"+order_history_price);
+     if (order_history_price.equalsIgnoreCase("53.59")==true){    
+    	 System.out.println("Price matched");
+     }
+     else {
+    	 System.out.println("Price doesn't match");
+     }
+     
+    }
+}
